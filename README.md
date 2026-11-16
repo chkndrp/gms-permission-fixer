@@ -6,7 +6,7 @@ issues (e.g. Broken Fused location) after a
 GApps+ROM update.
 
 ## Installation
-- Download module archive from releases
+- [Download module archive from releases](https://github.com/chkndrp/gms-permission-fixer/releases/latest/download/gmspermfix.zip)
 - Flash it in any superuser manager, or FKM
 
 ## Requirements
