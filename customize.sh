@@ -17,6 +17,12 @@
 SDK_VERSION=$(getprop ro.build.version.sdk)
 
 if [ -z "$SDK_VERSION" ]; 
+    then SDK_VERSION=$(getprop ro.system.build.version.sdk)
+fi
+if [ -z "$SDK_VERSION" ]; 
+    then SDK_VERSION=$(getprop ro.bootimage.build.version.sdk)
+fi
+if [ -z "$SDK_VERSION" ]; 
     then SDK_VERSION=0
 fi
 
