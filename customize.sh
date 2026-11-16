@@ -14,6 +14,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+MISSING=""
+for cmd in getprop pm grep read echo cut dumpsys printf awk appops am sleep; 
+    do command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
+done
+
+if [ -n "$MISSING" ]; 
+    then 
+        ui_print "[FAIL] Missing required commands: $MISSING"
+        abort "[FAIL] Please install busybox/toybox, this script will now abort."
+fi
+
 SDK_VERSION=$(getprop ro.build.version.sdk)
 
 if [ -z "$SDK_VERSION" ]; 
@@ -106,4 +117,4 @@ sleep 5
 
 ui_print "--- Finished processing all packages ---"
 ui_print
-abort "This script will now abort for a native cleanup."
+abort "[SUCCESS] This script will now abort for a native cleanup."
