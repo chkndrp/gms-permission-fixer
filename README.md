@@ -9,7 +9,7 @@ In detail, this script grants all `*google*` apps
 all requested runtime and appops permissions.
 
 ## Installation
-- [Download module archive from releases](https://github.com/chkndrp/gms-permission-fixer/releases/latest/download/gmspermfix.zip)
+- [Download module archive from releases](https://github.com/chkndrp/gms-permission-fixer/releases/latest/download/gmspermfix.zip). There is also a [mirror at SourceForge](https://sourceforge.net/projects/gms-permission-fixer)
 - Flash it in any superuser manager, or FKM
 
 ## Requirements
