@@ -25,16 +25,19 @@ if [ -n "$MISSING" ];
         abort "[FAIL] Please install busybox/toybox, this script will now abort."
 fi
 
-SDK_VERSION=$(getprop ro.build.version.sdk)
+SYSTEM_SDK_VER=$(getprop ro.build.version.sdk)
 
-if [ -z "$SDK_VERSION" ]; 
-    then SDK_VERSION=$(getprop ro.system.build.version.sdk)
+if [ -z "$SYSTEM_SDK_VER" ];
+    then SYSTEM_SDK_VER=$(getprop ro.system.build.version.sdk)
 fi
-if [ -z "$SDK_VERSION" ]; 
-    then SDK_VERSION=$(getprop ro.bootimage.build.version.sdk)
+if [ -z "$SYSTEM_SDK_VER" ];
+    then SYSTEM_SDK_VER=$(getprop ro.system_dlkm.build.version.sdk)
 fi
-if [ -z "$SDK_VERSION" ]; 
-    then SDK_VERSION=0
+if [ -z "$SYSTEM_SDK_VER" ];
+    then SYSTEM_SDK_VER=$(getprop ro.bootimage.build.version.sdk)
+fi
+if [ -z "$SYSTEM_SDK_VER" ];
+    then SYSTEM_SDK_VER=0
 fi
 
 ui_print "Fixing GApps permissions"
@@ -48,7 +51,7 @@ pm list packages -a | grep "google" | while read -r PKG_LINE;
         PACKAGE_DUMP=$(dumpsys package "$PKG_NAME")
         PERMISSIONS=$(printf '%s\n' "$PACKAGE_DUMP" | grep "android.permission" | awk '{print $1}')
 
-        if [ "$SDK_VERSION" -ge 34 ];
+        if [ "$SYSTEM_SDK_VER" -ge 34 ];
             then
                 if pm grant --all-permissions "$PKG_NAME" 2>/dev/null; 
                     then ui_print "[SUCCESS] Runtime bulk grant OK"
