@@ -5,9 +5,8 @@ needed for GMS, which may fix some random
 issues (e.g. Broken Fused location) after a 
 GApps+ROM update.
 
-As a side effect, this can also be used to
-grant all required and optional permissions to
-all google apps to fix some functionality
+In detail, this script grants all `*google*` apps
+all requested runtime and appops permissions.
 
 ## Installation
 - [Download module archive from releases](https://github.com/chkndrp/gms-permission-fixer/releases/latest/download/gmspermfix.zip)
