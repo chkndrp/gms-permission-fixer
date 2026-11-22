@@ -5,7 +5,8 @@ needed for GMS, which may fix some random
 issues (e.g. Broken Fused location) after a 
 GApps+ROM update.
 
-In detail, this script grants all `*google*` apps
+In detail, after verifying,
+this script grants all `com.google.*` apps
 all requested runtime and appops permissions.
 
 ## Installation

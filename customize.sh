@@ -16,14 +16,26 @@
 
 gms_permission_fix() {
     MISSING=""
-    for cmd in getprop pm grep read echo cut dumpsys printf awk appops am sleep;
+    for cmd in getprop pm grep read echo dumpsys printf awk appops am app_process mktemp rm sleep;
         do command -v "$cmd" >/dev/null 2>&1 || MISSING="$MISSING $cmd"
     done
 
     if [ -n "$MISSING" ];
         then
             ui_print "[FAIL] Missing required commands: $MISSING"
-            abort "[FAIL] Please install busybox/toybox, this script will now abort."
+            abort "[FAIL] Please install busybox/toybox, aborting."
+    fi
+
+    if [ -z "$MODDIR" ]; 
+        then MODDIR=${MODPATH:-.}
+    fi
+
+    PACKAGE_CHECK_PATH="$MODDIR/dex/PackageCheck.dex"
+
+    if [ ! -f "$PACKAGE_CHECK_PATH" ];
+        then
+            ui_print "[FAIL] Missing PackageCheck.dex"
+            abort "[FAIL] Please re-download this script from a different source."
     fi
 
     SYSTEM_SDK_VER=$(getprop ro.build.version.sdk)
@@ -44,12 +56,47 @@ gms_permission_fix() {
     ui_print "Fixing GApps permissions"
     ui_print
 
-    pm list packages -a | grep "google" | while read -r PKG_LINE;
-        do
-            PKG_NAME=$(echo "$PKG_LINE" | cut -d ':' -f 2)
-            ui_print "--- Processing: $PKG_NAME ---"
+    if ! CHECKER_LOG=$(mktemp "$MODDIR/.PackageCheck.XXXXXX");
+        then
+            ui_print "[FAIL] Could not create a temporary log"
+            abort "[FAIL] Please flash again or reboot your device, aborting."
+    fi
 
-            PACKAGE_DUMP=$(dumpsys package "$PKG_NAME")
+    if TRUSTED_PACKAGES=$(CLASSPATH="$PACKAGE_CHECK_PATH" app_process /system/bin PackageCheck 2>"$CHECKER_LOG");
+        then CHECKER_STATUS=0
+        else CHECKER_STATUS=$?
+    fi
+
+    while IFS= read -r CHECKER_LINE;
+        do
+            if [ -n "$CHECKER_LINE" ]; 
+                then 
+                    ui_print "--- PackageCheck ---"
+                    ui_print "$CHECKER_LINE"
+            fi
+    done < "$CHECKER_LOG"
+    rm -f "$CHECKER_LOG"
+
+    if [ "$CHECKER_STATUS" -ne 0 ];
+        then
+            ui_print "[FAIL] PackageCheck process failed"
+            abort "[FAIL] Please open an issue on GitHub, aborting."
+    fi
+
+    ui_print
+    printf '%s\n' "$TRUSTED_PACKAGES" | while read -r PKG_NAME;
+        do
+            if [ -n "$PKG_NAME" ]; 
+                then ui_print "--- Processing: $PKG_NAME ---"
+                else continue
+            fi
+
+            if ! PACKAGE_DUMP=$(dumpsys package "$PKG_NAME" 2>/dev/null);
+                then
+                    ui_print "[SKIP] Could not read package metadata for $PKG_NAME"
+                    continue
+            fi
+
             PERMISSIONS=$(printf '%s\n' "$PACKAGE_DUMP" | grep "android.permission" | awk '{print $1}')
 
             if [ "$SYSTEM_SDK_VER" -ge 34 ];
