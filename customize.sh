@@ -1,5 +1,7 @@
-#  GMS Permission fixer
-#  Copyright (C) 2025 chkndrp
+#  A flashable script that grants all runtime/appops permissions to 
+#  google apps to fix post-OTA GMS issues.
+# 
+#  Copyright (C) 2026 chkndrp
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
