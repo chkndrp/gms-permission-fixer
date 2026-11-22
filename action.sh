@@ -19,9 +19,12 @@
 ui_print() { echo "$1"; }
 abort() { echo "$1"; exit 1; }
 
-MODDIR=${0%/*}
-[ "$MODDIR" = "$0" ] && MODDIR=.
+export GMS_PERMISSION_FIX_ACTION=1
+export MODDIR="${0%/*}"
 
-GMS_PERMISSION_FIX_ACTION=1
+if [ "$MODDIR" = "$0" ]; 
+    then export MODDIR=.
+fi
+
 . "$MODDIR/customize.sh"
 gms_permission_fix
