@@ -12,5 +12,7 @@ kind: script
 authors:
   - name: chkndrp
     url: https://github.com/chkndrp
+compatibility:
+  androidMinApi: 28
 release:
   assetPattern: "gmspermfix*.zip"

@@ -14,5 +14,6 @@ all requested runtime and appops permissions.
 - Flash it in any superuser manager, or FKM
 
 ## Requirements
+- Android 9+
 - Magisk 20.4+
 - or any KernelSU/APatch/FKM version

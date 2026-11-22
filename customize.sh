@@ -53,6 +53,12 @@ gms_permission_fix() {
         then SYSTEM_SDK_VER=0
     fi
 
+    if [ "$SYSTEM_SDK_VER" -lt 28 ];
+        then
+            ui_print "[FAIL] Android 9 or newer is required"
+            abort "[FAIL] Detected Android API level $SYSTEM_SDK_VER."
+    fi
+
     ui_print "Fixing GApps permissions"
     ui_print
 
