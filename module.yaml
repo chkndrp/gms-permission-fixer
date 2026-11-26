@@ -15,4 +15,4 @@ authors:
 compatibility:
   androidMinApi: 28
 release:
-  assetPattern: "gmspermfix*.zip"
+  assetPattern: "gms-permission-fixer-*.zip"
