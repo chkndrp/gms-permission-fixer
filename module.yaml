@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/KernelSU-Modules/tools/main/schemas/module.schema.json
 schemaVersion: 1
-id: gms_permission_fixer
+id: gms-permission-fixer
 name: GMS Permission fixer
 summary: A flashable script that grants all runtime/appops permissions to google apps to fix post-OTA GMS issues.
 description: README.md
-license: GPL-3.0-only
+license: GPL-3.0-or-later
 homepage: https://github.com/chkndrp/gms-permission-fixer
 support: https://github.com/chkndrp/gms-permission-fixer/issues
 tags: [system, gapps, permissions, google, gms, fix]

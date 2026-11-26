@@ -1,4 +1,4 @@
-id=gms_permission_fixer
+id=gms-permission-fixer
 name=GMS Permission fixer
 description=A flashable script that grants all runtime/appops permissions to google apps to fix post-OTA GMS issues.
 author=chkndrp
